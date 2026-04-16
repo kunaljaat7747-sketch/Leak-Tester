@@ -1,0 +1,44 @@
+name: cosmo_calculator
+description: Industrial Leak Testing Calculator — Cosmo Calculator
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_pdfview: ^1.3.2
+  path_provider: ^2.1.2
+  intl: ^0.19.0
+  share_plus: ^7.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/app_icon.jpeg"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0D47A1"
+  adaptive_icon_foreground: "assets/icon/app_icon.jpeg"
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Logo shown in AppBar
+    - assets/images/cosmo_logo.jpeg
+    # Launcher icon source
+    - assets/icon/app_icon.jpeg
+    # PDF manuals
+    - assets/manuals/LS_R902_ENG.pdf
+    - assets/manuals/LS_R902_Temperature.pdf
+    - assets/manuals/LS_R700_TH.pdf
+    - assets/manuals/LS_R700_ENG.pdf
+    - assets/manuals/LS_1866_ENG.pdf
+    - assets/manuals/LM_1C_Series.pdf
