@@ -1,7 +1,8 @@
 // widgets/cosmo_logo.dart
 // CosmoAppBarLogo — shows assets/images/cosmo_logo.png
 // Uses a wide rectangular container to preserve the horizontal logo's text.
-// Falls back to painted version if PNG not placed yet.
+// Falls back to painted version if 
+// not placed yet.
 
 import 'dart:math';
 import 'package:flutter/material.dart';

@@ -1,5 +1,4 @@
 // screens/calculator_screen.dart
-// AppBar: logo + Expanded title only — no badge crowding the row
 
 import 'package:flutter/material.dart';
 import '../main.dart';
@@ -57,56 +56,73 @@ class _CalculatorScreenState extends State<CalculatorScreen>
   PreferredSizeWidget _buildAppBar() {
     return PreferredSize(
       preferredSize: const Size.fromHeight(116),
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppTheme.darkBlue, AppTheme.primaryBlue],
-            begin: Alignment.topLeft, end: Alignment.bottomRight,
-          ),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
 
-            // Header row — logo + title, logo sized for legibility
-            Padding(
-              padding: const EdgeInsets.fromLTRB(14, 10, 14, 4),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                const CosmoAppBarLogo(height: 38),   // wide rectangle, text legible
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('Calculator',
-                          style: TextStyle(color: Colors.white, fontSize: 18,
-                              fontWeight: FontWeight.w800, letterSpacing: 0.3),
-                          overflow: TextOverflow.ellipsis, maxLines: 1),
-                      Text('Industrial Leak Testing',
-                          style: TextStyle(color: Colors.white.withOpacity(0.75),
-                              fontSize: 11, letterSpacing: 0.6),
-                          overflow: TextOverflow.ellipsis, maxLines: 1),
-                    ],
+          // ── WHITE top section: logo + title ─────────────────────────
+          Container(
+            color: Colors.white,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+
+                  // Logo sits directly on white — no pill needed, merges naturally
+                  CosmoAppBarLogo(height: 47),
+
+                  const SizedBox(width: 22),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('Calculator',
+                            style: TextStyle(
+                              color: AppTheme.darkBlue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.3,
+                            ),
+                            overflow: TextOverflow.ellipsis, maxLines: 1),
+                        Text('Industrial Leak Testing',
+                            style: TextStyle(
+                              color: AppTheme.primaryBlue.withOpacity(0.7),
+                              fontSize: 11,
+                              letterSpacing: 0.6,
+                            ),
+                            overflow: TextOverflow.ellipsis, maxLines: 1)   
+                      ],
+                    ),
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ),
+          ),
 
-            // Scrollable tab bar
-            TabBar(
-              controller:     _tc,
-              isScrollable:   true,
-              tabAlignment:   TabAlignment.start,
-              indicatorColor: Colors.white,
-              indicatorWeight: 3,
-              indicatorSize:  TabBarIndicatorSize.label,
-              labelColor:     Colors.white,
+          // ── BLUE tab bar — same gradient as before ───────────────────
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppTheme.darkBlue, AppTheme.primaryBlue],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: TabBar(
+              controller:           _tc,
+              isScrollable:         true,
+              tabAlignment:         TabAlignment.start,
+              indicatorColor:       Colors.white,
+              indicatorWeight:      3,
+              indicatorSize:        TabBarIndicatorSize.label,
+              labelColor:           Colors.white,
               unselectedLabelColor: Colors.white.withOpacity(0.55),
-              labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+              labelStyle:           const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
               unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               tabs: List.generate(_tabs.length, (i) {
-                final t = _tabs[i];
+                final t      = _tabs[i];
                 final active = _tc.index == i;
                 return Tab(child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Icon(active ? t.activeIcon : t.icon, size: 15),
@@ -115,8 +131,9 @@ class _CalculatorScreenState extends State<CalculatorScreen>
                 ]));
               }),
             ),
-          ]),
-        ),
+          ),
+
+        ],
       ),
     );
   }

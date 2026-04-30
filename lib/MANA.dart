@@ -15,19 +15,6 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // Make the status bar transparent so the appbar gradient shows through.
-  // Icons are dark so they're readable on the light top area.
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor:            Colors.transparent,
-    statusBarIconBrightness:   Brightness.dark,
-    statusBarBrightness:       Brightness.light,
-  ));
-  // Status bar: transparent so white appbar shows through, dark icons for contrast
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor:          Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness:     Brightness.light,
-  ));
   runApp(const CosmoCalculatorApp());
 }
 

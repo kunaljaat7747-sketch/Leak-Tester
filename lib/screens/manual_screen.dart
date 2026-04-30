@@ -1,4 +1,4 @@
-// screens/manual_screen.dart — with download support via share_plus
+// screens/manual_screen.dart
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -18,15 +18,14 @@ class ManualScreen extends StatefulWidget {
 class _ManualScreenState extends State<ManualScreen> {
   MachineModel? _selectedModel;
   String?  _localPdfPath;
-  bool     _isLoading      = false;
-  bool     _hasError       = false;
+  bool     _isLoading     = false;
+  bool     _hasError      = false;
   String?  _errorMsg;
-  int      _totalPages     = 0;
-  int      _currentPage    = 0;
-  bool     _isDownloading  = false;   // download-in-progress flag
+  int      _totalPages    = 0;
+  int      _currentPage   = 0;
+  bool     _isDownloading = false;
   PDFViewController? _pdfController;
 
-  // ── Load PDF from assets into temp dir ────────────────────────────────────
   Future<void> _onModelSelected(MachineModel model) async {
     setState(() {
       _selectedModel = model; _localPdfPath = null;
@@ -36,7 +35,7 @@ class _ManualScreenState extends State<ManualScreen> {
     try {
       final path = await _extractAssetToTemp(model.assetPath!);
       if (mounted) setState(() { _localPdfPath = path; _isLoading = false; });
-    } catch (e) {
+    } catch (e) { 
       if (mounted) setState(() { _isLoading = false; _hasError = true; _errorMsg = e.toString(); });
     }
   }
@@ -51,27 +50,19 @@ class _ManualScreenState extends State<ManualScreen> {
     return file.path;
   }
 
-  // ── Download / Share the PDF ───────────────────────────────────────────────
-  // On Android: system share sheet → user can pick "Save to Downloads" / Drive etc.
-  // On iOS:     standard share sheet → save to Files, AirDrop, etc.
   Future<void> _downloadPdf() async {
     if (_localPdfPath == null || _selectedModel == null) return;
     setState(() => _isDownloading = true);
     try {
-      final file    = XFile(_localPdfPath!, mimeType: 'application/pdf');
-      final name    = _selectedModel!.displayName;
-      final result  = await Share.shareXFiles(
+      final file   = XFile(_localPdfPath!, mimeType: 'application/pdf');
+      final result = await Share.shareXFiles(
         [file],
-        subject: '$name — Cosmo Manual',
-        text:    'Manual for $name',
+        subject: '${_selectedModel!.displayName} — Cosmo Manual',
+        text:    'Manual for ${_selectedModel!.displayName}',
       );
-
       if (!mounted) return;
-
       if (result.status == ShareResultStatus.success) {
         _showSnack('Saved / shared successfully', success: true);
-      } else if (result.status == ShareResultStatus.dismissed) {
-        // user cancelled — no message needed
       }
     } catch (e) {
       if (mounted) _showSnack('Download failed: $e', success: false);
@@ -96,7 +87,6 @@ class _ManualScreenState extends State<ManualScreen> {
     ));
   }
 
-  // ── Build ──────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,62 +102,60 @@ class _ManualScreenState extends State<ManualScreen> {
   PreferredSizeWidget _buildAppBar() {
     return PreferredSize(
       preferredSize: const Size.fromHeight(72),
+      // ── WHITE appbar — logo merges naturally ────────────────────────
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppTheme.darkBlue, AppTheme.primaryBlue],
-            begin: Alignment.topLeft, end: Alignment.bottomRight,
-          ),
-        ),
+        color: Colors.white,
         child: SafeArea(
           bottom: false,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
             child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
 
-              // ── COSMO LOGO ──────────────────────────────────────────────
-              Image.asset(
-                'assets/images/cosmo_logo.jpeg',
-                height: 38,
-                width:  106,
-                fit:    BoxFit.contain,
-                errorBuilder: (_, __, ___) => const CosmoLogoPainted(size: 38),
-              ),
+              // Logo on white background — merges, no pill needed
+              CosmoAppBarLogo(height: 47),
 
-              const SizedBox(width: 14),
+              const SizedBox(width: 22),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Troubleshooting',
-                        style: TextStyle(color: Colors.white, fontSize: 17,
-                            fontWeight: FontWeight.w800),
+                    const Text('Machine Manuals',
+                        style: TextStyle(
+                          color: AppTheme.darkBlue,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                        ),
                         overflow: TextOverflow.ellipsis, maxLines: 1),
-                    Text('Select a model to view its Error Manual',
-                        style: TextStyle(color: Colors.white.withOpacity(0.72),
-                            fontSize: 10),
+                    Text('Select a model to view its manual',
+                        style: TextStyle(
+                          color: AppTheme.primaryBlue.withOpacity(0.7),
+                          fontSize: 10,
+                        ),
                         overflow: TextOverflow.ellipsis, maxLines: 1),
                   ],
                 ),
               ),
 
-              // Page counter (only while PDF is open)
+              // Page counter
               if (_totalPages > 0) ...[
                 const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
+                    color: AppTheme.primaryBlue.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text('${_currentPage + 1}/$_totalPages',
-                      style: const TextStyle(color: Colors.white, fontSize: 12,
-                          fontWeight: FontWeight.w700)),
+                      style: const TextStyle(
+                        color: AppTheme.primaryBlue,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      )),
                 ),
               ],
 
-              // ── Download button — only visible when a PDF is loaded ──────
+              // Download button
               if (_localPdfPath != null) ...[
                 const SizedBox(width: 6),
                 Tooltip(
@@ -180,16 +168,16 @@ class _ManualScreenState extends State<ManualScreen> {
                       child: Container(
                         width: 38, height: 38,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.18),
+                          color: AppTheme.primaryBlue.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(22),
                         ),
                         child: _isDownloading
-                            ? const Padding(
-                                padding: EdgeInsets.all(10),
+                            ? Padding(
+                                padding: const EdgeInsets.all(10),
                                 child: CircularProgressIndicator(
-                                    color: Colors.white, strokeWidth: 2))
+                                    color: AppTheme.primaryBlue, strokeWidth: 2))
                             : const Icon(Icons.download_rounded,
-                                color: Colors.white, size: 20),
+                                color: AppTheme.primaryBlue, size: 20),
                       ),
                     ),
                   ),
@@ -202,7 +190,6 @@ class _ManualScreenState extends State<ManualScreen> {
     );
   }
 
-  // ── Model selector ─────────────────────────────────────────────────────────
   Widget _buildModelSelector() {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 14, 16, 8),
@@ -224,7 +211,7 @@ class _ManualScreenState extends State<ManualScreen> {
         const SizedBox(height: 12),
         DropdownButtonFormField<MachineModel>(
           value: _selectedModel,
-          hint: const Text('Select a model...',
+          hint: const Text('Select a machine model...',
               style: TextStyle(color: AppTheme.textHint, fontSize: 14)),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -237,8 +224,8 @@ class _ManualScreenState extends State<ManualScreen> {
           items: kMachineModels.map((m) => DropdownMenuItem(
             value: m,
             child: Row(children: [
-              const Icon(Icons.picture_as_pdf_outlined, size: 16, color: AppTheme.accentBlue),
-              const SizedBox(width: 8),
+              Icon(Icons.picture_as_pdf_outlined, size: 16, color: AppTheme.accentBlue),
+              SizedBox(width: 8),
               Expanded(child: Text(m.displayName,
                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500,
                       color: AppTheme.textBody),
@@ -254,7 +241,6 @@ class _ManualScreenState extends State<ManualScreen> {
     );
   }
 
-  // ── Body dispatcher ────────────────────────────────────────────────────────
   Widget _buildBody() {
     if (_localPdfPath != null) return _buildPdfView();
     return LayoutBuilder(builder: (context, constraints) {
@@ -262,7 +248,6 @@ class _ManualScreenState extends State<ManualScreen> {
       if (_isLoading)     content = _buildLoader();
       else if (_hasError) content = _buildError();
       else                content = _buildPlaceholder();
-
       return SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: ConstrainedBox(
@@ -273,7 +258,6 @@ class _ManualScreenState extends State<ManualScreen> {
     });
   }
 
-  // ── States ─────────────────────────────────────────────────────────────────
   Widget _buildPlaceholder() => Center(child: Padding(
     padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
     child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -358,7 +342,6 @@ class _ManualScreenState extends State<ManualScreen> {
     ]),
   ));
 
-  // ── PDF viewer with toolbar ────────────────────────────────────────────────
   Widget _buildPdfView() => Column(children: [
     Container(
       decoration: BoxDecoration(color: AppTheme.darkBlue.withOpacity(0.06)),
@@ -370,8 +353,6 @@ class _ManualScreenState extends State<ManualScreen> {
             style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
                 color: AppTheme.primaryBlue),
             overflow: TextOverflow.ellipsis)),
-
-        // ── Inline Download button in PDF toolbar ────────────────────────
         InkWell(
           borderRadius: BorderRadius.circular(8),
           onTap: _isDownloading ? null : _downloadPdf,
@@ -396,8 +377,6 @@ class _ManualScreenState extends State<ManualScreen> {
             ]),
           ),
         ),
-
-        // Page navigation
         if (_totalPages > 1) ...[
           const SizedBox(width: 6),
           IconButton(
@@ -420,7 +399,6 @@ class _ManualScreenState extends State<ManualScreen> {
         ],
       ]),
     ),
-
     Expanded(child: PDFView(
       filePath: _localPdfPath!,
       enableSwipe: true, swipeHorizontal: false,

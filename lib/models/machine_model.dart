@@ -32,42 +32,42 @@ class MachineModel {
 // Replace assetPath / pdfUrl with real values before shipping.
 // ============================================================
 const List<MachineModel> kMachineModels = [
-  MachineModel(
-    id: 'LS-R902-ENG',
-    displayName: 'LS-R902-ENG',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R902_ENG.pdf',
-  ),
-  MachineModel(
-    id: 'LS-R902-Temperature',
-    displayName: 'LS-R902-Temperature',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R902_Temperature.pdf',
-  ),
-  MachineModel(
-    id: 'LS-R700-TH',
-    displayName: 'LS-R700-TH',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R700_TH.pdf',
-  ),
-  MachineModel(
-    id: 'LS-R700-ENG',
-    displayName: 'LS-R700-ENG',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R700_ENG.pdf',
-  ),
-  MachineModel(
-    id: 'LS-1866-ENG',
-    displayName: 'LS-1866-ENG',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_1866_ENG.pdf',
-  ),
-  MachineModel(
-    id: 'LM-1C-Series',
-    displayName: 'LM-1C Series',
-    source: ManualSource.asset,
-    assetPath: 'assets/manuals/LM_1C_Series.pdf',
-  ),
+  // MachineModel(
+  //   id: 'LS-R902-ENG',
+  //   displayName: 'LS-R902-ENG',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LS_R902_ENG.pdf',
+  // ),
+  // MachineModel(
+  //   id: 'LS-R902-Temperature',
+  //   displayName: 'LS-R902-Temperature',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LS_R902_Temperature.pdf',
+  // ),
+  // MachineModel(
+  //   id: 'LS-R700-TH',
+  //   displayName: 'LS-R700-TH',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LS_R700_TH.pdf',
+  // ),
+  // MachineModel(
+  //   id: 'LS-R700-ENG',
+  //   displayName: 'LS-R700-ENG',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LS_R700_ENG.pdf',
+  // ),
+  // MachineModel(
+  //   id: 'LS-1866-ENG',
+  //   displayName: 'LS-1866-ENG',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LS_1866_ENG.pdf',
+  // ),
+  // MachineModel(
+  //   id: 'LM-1C-Series',
+  //   displayName: 'LM-1C Series',
+  //   source: ManualSource.asset,
+  //   assetPath: 'assets/manuals/LM_1C_Series.pdf',
+  // ),
   MachineModel(
     id: 'LS_R700',
     displayName: 'LS_R700',
@@ -75,9 +75,39 @@ const List<MachineModel> kMachineModels = [
     assetPath: 'assets/manuals/LS_R700.pdf',
   ),
   MachineModel(
-    id: 'LS_R902',
-    displayName: 'LS_R902',
+    id: 'LS_R900',
+    displayName: 'LS_R900',
     source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R902.pdf',
+    assetPath: 'assets/manuals/LS_R900.pdf',
+  ),
+  MachineModel(
+    id: 'LS_R740',
+    displayName: 'LS_R740',
+    source: ManualSource.asset,
+    assetPath: 'assets/manuals/LS_R740.pdf',
+  ),
+  MachineModel(
+    id: 'LS_R1866',
+    displayName: 'LS_R1866',
+    source: ManualSource.asset,
+    assetPath: 'assets/manuals/LS_R1866.pdf',
+  ),
+  MachineModel(
+    id: 'LS_R1864X',
+    displayName: 'LS_R1864X',
+    source: ManualSource.asset,
+    assetPath: 'assets/manuals/LS_R1864X.pdf',
+  ),
+  MachineModel(
+    id: 'AF_2400',
+    displayName: 'AF_2400',
+    source: ManualSource.asset,
+    assetPath: 'assets/manuals/AF_2400.pdf',
+  ),
+  MachineModel(
+    id: 'AF_R220',
+    displayName: 'AF_R220',
+    source: ManualSource.asset,
+    assetPath: 'assets/manuals/AF_R220.pdf',
   )
 ];
