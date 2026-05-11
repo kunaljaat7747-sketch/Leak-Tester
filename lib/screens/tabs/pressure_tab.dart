@@ -73,32 +73,37 @@ class _PressureDropTabState extends State<PressureDropTab>
     super.build(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Form(key: _fk, child: Column(children: [
-        const InfoBadge(text: 'ΔP = (Q × Patm × T) / (Ve × 60)'),
-        const SizedBox(height: 4),
-        SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
-          NumericField(controller: _qc, label: 'Leak Rate (Q)', unit: 'mL/min', hint: 'e.g. 0.5', validator: _v),
-          NumericField(controller: _vc, label: 'Volume (Ve)',   unit: 'mL',     hint: 'e.g. 500', validator: _v),
-          NumericField(controller: _tc, label: 'Test Time (T)', unit: 'sec',    hint: 'e.g. 60',  validator: _v),
-        ]),
+      child: ResponsiveContent(
+        child: Form(
+          key: _fk,
+          child: Column(children: [
+            const InfoBadge(text: 'ΔP = (Q × Patm × T) / (Ve × 60)'),
+            const SizedBox(height: 4),
+            SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
+              NumericField(controller: _qc, label: 'Leak Rate (Q)', unit: 'mL/min', hint: 'e.g. 0.5', validator: _v),
+              NumericField(controller: _vc, label: 'Volume (Ve)',   unit: 'mL',     hint: 'e.g. 500', validator: _v),
+              NumericField(controller: _tc, label: 'Test Time (T)', unit: 'sec',    hint: 'e.g. 60',  validator: _v),
+            ]),
 
-        // ── SegmentedButton fills full width — impossible to overflow ──
-        UnitSelectorCard(
-          icon:     Icons.swap_horiz_rounded,
-          label:    'Result unit',
-          selected: _resultUnit,
-          onChanged: (v) => setState(() => _resultUnit = v),
-          segments: const [
-            ButtonSegment(value: 'pa',  label: Text('Pa')),
-            ButtonSegment(value: 'kpa', label: Text('kPa')),
-            ButtonSegment(value: 'bar', label: Text('bar')),
-          ],
+            // ── SegmentedButton fills full width — impossible to overflow ──
+            UnitSelectorCard(
+              icon:     Icons.swap_horiz_rounded,
+              label:    'Result unit',
+              selected: _resultUnit,
+              onChanged: (v) => setState(() => _resultUnit = v),
+              segments: const [
+                ButtonSegment(value: 'pa',  label: Text('Pa')),
+                ButtonSegment(value: 'kpa', label: Text('kPa')),
+                ButtonSegment(value: 'bar', label: Text('bar')),
+              ],
+            ),
+
+            ActionButtons(onCalculate: _calculate, onReset: _reset),
+            if (_showResult) ResultCard(hasError: _hasError, errorMessage: _errorMsg, rows: _rows),
+            const SizedBox(height: 20),
+          ]),
         ),
-
-        ActionButtons(onCalculate: _calculate, onReset: _reset),
-        if (_showResult) ResultCard(hasError: _hasError, errorMessage: _errorMsg, rows: _rows),
-        const SizedBox(height: 20),
-      ])),
+      ),
     );
   }
 }

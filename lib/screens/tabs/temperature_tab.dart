@@ -73,7 +73,8 @@ class _TemperatureTabState extends State<TemperatureTab>
     super.build(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Form(key: _fk, child: Column(children: [
+      child: ResponsiveContent(
+        child: Form(key: _fk, child: Column(children: [
 
         // Formula badge
         Container(
@@ -189,6 +190,7 @@ class _TemperatureTabState extends State<TemperatureTab>
         ],
         const SizedBox(height: 20),
       ])),
+      ),
     );
   }
 }

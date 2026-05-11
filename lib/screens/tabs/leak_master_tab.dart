@@ -75,7 +75,8 @@ class _LeakMasterTabState extends State<LeakMasterTab>
     super.build(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Form(key: _fk, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: ResponsiveContent(
+        child: Form(key: _fk, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
         // Formula badge
         Container(
@@ -141,6 +142,7 @@ class _LeakMasterTabState extends State<LeakMasterTab>
         _buildDataTable(),
         const SizedBox(height: 20),
       ])),
+      ),
     );
   }
 

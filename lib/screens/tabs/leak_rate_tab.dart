@@ -34,19 +34,29 @@ class _S extends State<LeakRateTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SingleChildScrollView(padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Form(key: _fk, child: Column(children: [
-        const InfoBadge(text: 'Q = (Ve × ΔP × 60) / (Patm × T)   |   Patm = 101,300 Pa'),
-        const SizedBox(height: 4),
-        SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
-          NumericField(controller: _vc, label: 'Volume (Ve)', unit: 'mL', hint: 'e.g. 500', validator: _v),
-          PressureInputRow(controller: _pc, selectedUnit: _pu, onUnitChanged: (u) { if (u != null) setState(() => _pu = u); }, validator: _v),
-          NumericField(controller: _tc, label: 'Test Time (T)', unit: 'sec', hint: 'e.g. 60', validator: _v),
-        ]),
-        ActionButtons(onCalculate: _calc, onReset: _reset),
-        if (_show) ResultCard(hasError: _err, errorMessage: _em,
-          rows: _err ? [] : [ResultRow(label: 'Leak Rate (Q)', value: formatValue(_res!), unit: 'mL/min', isPrimary: true)]),
-        const SizedBox(height: 20),
-      ])));
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: ResponsiveContent(
+        child: Form(
+          key: _fk,
+          child: Column(children: [
+            const InfoBadge(text: 'Q = (Ve × ΔP × 60) / (Patm × T)   |   Patm = 101,300 Pa'),
+            const SizedBox(height: 4),
+            SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
+              NumericField(controller: _vc, label: 'Volume (Ve)', unit: 'mL', hint: 'e.g. 500', validator: _v),
+              PressureInputRow(controller: _pc, selectedUnit: _pu, onUnitChanged: (u) { if (u != null) setState(() => _pu = u); }, validator: _v),
+              NumericField(controller: _tc, label: 'Test Time (T)', unit: 'sec', hint: 'e.g. 60', validator: _v),
+            ]),
+            ActionButtons(onCalculate: _calc, onReset: _reset),
+            if (_show) ResultCard(
+              hasError: _err,
+              errorMessage: _em,
+              rows: _err ? [] : [ResultRow(label: 'Leak Rate (Q)', value: formatValue(_res!), unit: 'mL/min', isPrimary: true)],
+            ),
+            const SizedBox(height: 20),
+          ]),
+        ),
+      ),
+    );
   }
 }

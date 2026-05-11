@@ -34,22 +34,32 @@ class _S extends State<TimeTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SingleChildScrollView(padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Form(key: _fk, child: Column(children: [
-        const InfoBadge(text: 'T = (Ve × ΔP × 60) / (Patm × Q)'),
-        const SizedBox(height: 4),
-        SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
-          NumericField(controller: _vc, label: 'Volume (Ve)', unit: 'mL', hint: 'e.g. 500', validator: _v),
-          PressureInputRow(controller: _pc, selectedUnit: _pu, onUnitChanged: (u) { if (u != null) setState(() => _pu = u); }, validator: _v),
-          NumericField(controller: _qc, label: 'Leak Rate (Q)', unit: 'mL/min', hint: 'e.g. 0.5', validator: _v),
-        ]),
-        ActionButtons(onCalculate: _calc, onReset: _reset),
-        if (_show) ResultCard(hasError: _err, errorMessage: _em,
-          rows: _err ? [] : [
-            ResultRow(label: 'Test Time (T)', value: _res!.toStringAsFixed(4), unit: 'sec', isPrimary: true),
-            ResultRow(label: 'In Minutes', value: (_res! / 60).toStringAsFixed(4), unit: 'min'),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: ResponsiveContent(
+        child: Form(
+          key: _fk,
+          child: Column(children: [
+            const InfoBadge(text: 'T = (Ve × ΔP × 60) / (Patm × Q)'),
+            const SizedBox(height: 4),
+            SectionCard(title: 'Inputs', icon: Icons.input_rounded, children: [
+              NumericField(controller: _vc, label: 'Volume (Ve)', unit: 'mL', hint: 'e.g. 500', validator: _v),
+              PressureInputRow(controller: _pc, selectedUnit: _pu, onUnitChanged: (u) { if (u != null) setState(() => _pu = u); }, validator: _v),
+              NumericField(controller: _qc, label: 'Leak Rate (Q)', unit: 'mL/min', hint: 'e.g. 0.5', validator: _v),
+            ]),
+            ActionButtons(onCalculate: _calc, onReset: _reset),
+            if (_show) ResultCard(
+              hasError: _err,
+              errorMessage: _em,
+              rows: _err ? [] : [
+                ResultRow(label: 'Test Time (T)', value: _res!.toStringAsFixed(4), unit: 'sec', isPrimary: true),
+                ResultRow(label: 'In Minutes', value: (_res! / 60).toStringAsFixed(4), unit: 'min'),
+              ],
+            ),
+            const SizedBox(height: 20),
           ]),
-        const SizedBox(height: 20),
-      ])));
+        ),
+      ),
+    );
   }
 }

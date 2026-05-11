@@ -7,6 +7,34 @@ import 'package:flutter/services.dart';
 import '../main.dart';
 import '../services/calculations.dart';
 
+// ── ResponsiveContent ─────────────────────────────────────────
+/// Centers page content and applies a max readable width on tablets/desktop.
+class ResponsiveContent extends StatelessWidget {
+  final Widget child;
+  const ResponsiveContent({super.key, required this.child});
+
+  double _maxWidthFor(double w) {
+    if (w >= 1200) return 900;
+    if (w >= 900) return 820;
+    if (w >= 600) return 720; // tablets
+    return double.infinity;   // phones
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, c) {
+      final maxW = _maxWidthFor(c.maxWidth);
+      return Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxW),
+          child: child,
+        ),
+      );
+    });
+  }
+}
+
 // ── SectionCard ───────────────────────────────────────────────
 class SectionCard extends StatelessWidget {
   final String title;
