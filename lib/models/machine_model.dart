@@ -88,15 +88,15 @@ const List<MachineModel> kMachineModels = [
   ),
   MachineModel(
     id: 'LS_R1866',
-    displayName: 'LS_R1866',
+    displayName: 'LS_1866',
     source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R1866.pdf',
+    assetPath: 'assets/manuals/LS_1866.pdf',
   ),
   MachineModel(
     id: 'LS_R1864X',
-    displayName: 'LS_R1864X',
+    displayName: 'LS_1864X',
     source: ManualSource.asset,
-    assetPath: 'assets/manuals/LS_R1864X.pdf',
+    assetPath: 'assets/manuals/LS_1864X.pdf',
   ),
   MachineModel(
     id: 'AF_2400',

@@ -22,12 +22,12 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
-  image_path: "assets/icon/app_icon.jpeg"
+  image_path: "assets/icon/app_icon.png"
   min_sdk_android: 21
   adaptive_icon_background: "#0D47A1"
-  adaptive_icon_foreground: "assets/icon/app_icon.jpeg"
+  adaptive_icon_foreground: "assets/icon/app_icon.png"
 
 flutter:
   uses-material-design: true
@@ -35,7 +35,7 @@ flutter:
     # Logo shown in AppBar
     - assets/images/cosmo_logo.jpeg
     # Launcher icon source
-    - assets/icon/app_icon.jpeg
+    - assets/icon/app_icon.png
     # PDF manuals
     # - assets/manuals/LS_R902_ENG.pdf
     # - assets/manuals/LS_R902_Temperature.pdf

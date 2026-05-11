@@ -120,7 +120,7 @@ class _ManualScreenState extends State<ManualScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Machine Manuals',
+                    const Text('Error and Troubleshooting',
                         style: TextStyle(
                           color: AppTheme.darkBlue,
                           fontSize: 17,
